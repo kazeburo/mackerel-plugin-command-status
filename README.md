@@ -29,10 +29,10 @@ $ mackerel-plugin-command-status -n sleep --timeout 3s -- sleep 30
 command-status.exit-code.sleep  137     1606958948
 ```
 
-Configure for mackerel-agent
+Configure for mackerel-agent to use mackerel-agent as crontab and get their exit status code as metrics.
 
 ```
-[plugin.metrics.update-status-cache]
+[plugin.metrics.update-cache]
 command = "/path/to/mackerel-plugin-command-status --name update-cache --timeout 10s -- /path/to/cmd-fetch-cache"
 ```
 
