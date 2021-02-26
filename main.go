@@ -18,13 +18,14 @@ var version string
 type opts struct {
 	OptArgs    []string
 	OptCommand string
-	Timeout    time.Duration `long:"timeout" default:"30s" description:"Timeout to connect mysql"`
+	Timeout    time.Duration `long:"timeout" default:"30s" description:"Timeout to wait for command finished"`
 	Name       string        `short:"n" long:"name" description:"Metrics name" required:"true"`
 	Version    bool          `short:"v" long:"version" description:"Show version"`
 }
 
 func runCmd(opts opts) int {
 	now := time.Now().Unix()
+	start := time.Now()
 	cmd := exec.Command(opts.OptCommand, opts.OptArgs...)
 	cmd.Stdout = os.Stderr
 	cmd.Start()
@@ -44,6 +45,8 @@ func runCmd(opts opts) int {
 		}
 		status = cmd.ProcessState.ExitCode()
 	}
+	duration := time.Since(start)
+	fmt.Printf("command-status.time-taken.%s\t%f\t%d\n", opts.Name, duration.Seconds(), now)
 	fmt.Printf("command-status.exit-code.%s\t%d\t%d\n", opts.Name, status, now)
 	return 0
 }
