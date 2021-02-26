@@ -20,13 +20,15 @@ Sample
 
 ```
 $ mackerel-plugin-command-status --name update-cache -- /path/to/cmd-fetch-cache
+command-status.time-taken.update-cache  0.008186        1606958816
 command-status.exit-code.update-cache  0       1606958816
 ```
 
 ```
 $ mackerel-plugin-command-status -n sleep --timeout 3s -- sleep 30
 2020/12/03 10:29:11 Command sleep timeout. killed
-command-status.exit-code.sleep  137     1606958948
+command-status.time-taken.sleep 3.016507        1614308642
+command-status.exit-code.sleep  137     1614308642
 ```
 
 Configure for mackerel-agent to use mackerel-agent as crontab and get their exit status code as metrics.
