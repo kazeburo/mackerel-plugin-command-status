@@ -8,8 +8,9 @@ Usage:
   mackerel-plugin-command-status mackerel-plugin-command-status [OPTIONS] -- command args1 args2 ...
 
 Application Options:
-      --timeout= Timeout to connect mysql (default: 30s)
+      --timeout= Timeout to wait for command finished (default: 30s)
   -n, --name=    Metrics name
+  -q, --quiet    Suppress error output of sub command
   -v, --version  Show version
 
 Help Options:
@@ -23,6 +24,19 @@ $ mackerel-plugin-command-status --name update-cache -- /path/to/cmd-fetch-cache
 command-status.time-taken.update-cache  0.008186        1606958816
 command-status.exit-code.update-cache  0       1606958816
 ```
+
+```
+$ mackerel-plugin-command-status -n test -- false 
+2025/04/15 16:17:07 Command false exit with err: exit status 1
+command-status.time-taken.test  0.001459        1744701427
+command-status.exit-code.test   1       1744701427
+
+$ mackerel-plugin-command-status --quiet --name test -- false
+command-status.time-taken.test  0.001316        1744701374
+command-status.exit-code.test   1       1744701374
+```
+
+`--quiet` (`-q`) suppresses error output of sub command.
 
 ```
 $ mackerel-plugin-command-status -n sleep --timeout 3s -- sleep 30
